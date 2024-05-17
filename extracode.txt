@@ -1,0 +1,66 @@
+// app
+// .post('/person',async (req,res)=>{
+//  try {   const body = req.body;
+
+//     // console.log('Request Body:', body);
+
+//     const newPerson = await new Person(body);
+
+//     const response = await newPerson.save();
+//     console.log('data saved sucessfully !!!');
+//     res.status(200).json(response);
+// }
+//     catch (error) {
+//         console.log(error);
+//         res.status(500).json({error : "Internal server error"})
+// }
+// }).get('/person', async (req, res) => {
+//     try {
+//         const result = await Person.find();
+//         console.log(result);
+//         res.status(200).json({ message: 'Fetch data successfully.', result: result });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// })
+// .get('/person/:worktype',async (req,res)=>{
+// try{
+//     const worktype = req.params.worktype;
+//     const result = await Person.find({work : worktype});
+//     console.log(result);
+//         res.status(200).json({ message: 'Fetch data successfully.', result: result });
+// }
+// catch(error){
+//     console.log(error);
+//         res.status(500).json({ error: "Internal server error" });
+// }
+// })
+
+
+// app
+// .post('/menu',async (req,res)=>{
+//     try {
+//         const body = req.body;
+//         // console.log(body);
+
+//         const newmenuitem = await new menuitem(body);
+
+//          const response = await newmenuitem.save();
+//          console.log('menuitem saved sucessfully !!!');
+//          res.status(200).json(response);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({error : "Internal server error"})
+//     }
+// } )
+// .get('/menu',async (req,res)=>{
+//   try {
+//     const result = await menuitem.find();
+//     console.log(result);
+//     res.status(200).json({ message: 'Fetch data successfully.', result: result });
+//   } catch (error) { 
+//     console.log(error);
+//     res.status(500).json({error : "internal Server Error"})
+//   }
+// })
