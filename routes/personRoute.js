@@ -1,23 +1,32 @@
 const express = require('express');
 const routes = express.Router();
 const Person = require("../models/person.model");
+const {generateToken,JWTMiddleware} = require("../jwt")
 
 routes
-.post('/',async (req,res)=>{
+.post('/signup',async (req,res)=>{
     try {   const body = req.body;
-       // console.log('Request Body:', body);
+       console.log('Request Body:', body);
    
        const newPerson = await new Person(body);
    
        const response = await newPerson.save();
        console.log('data saved sucessfully !!!');
-       res.status(200).json(response);
+
+       const payload = {
+        username : body.username
+       }
+
+       const token = generateToken(payload);
+       console.log("token",token)
+       res.status(200).json({response:response,token:token});
+
    }
        catch (error) {
            console.log(error);
            res.status(500).json({error : "Internal server error"})
    }
-   }).get('/', async (req, res) => {
+   }).get('/', JWTMiddleware,  async (req, res) => {
        try {
            const result = await Person.find();
            console.log(result);
@@ -28,7 +37,27 @@ routes
            res.status(500).json({ error: "Internal server error" });
        }
    })
-   .get('/:worktype',async (req,res)=>{
+   .post('/login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const user = await Person.findOne({ username: username });
+  
+      if (!user || !(await user.comparePassword(password))) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+      }
+
+const payload = {
+    username : user.username
+}
+const token = generateToken(payload);
+
+      res.status(200).json({ token : token});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  })
+  .get('/:worktype',async (req,res)=>{
    try{
        const worktype = req.params.worktype;
        const result = await Person.find({work : worktype});

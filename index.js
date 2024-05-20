@@ -2,6 +2,7 @@ const express = require('express');
 const connectMongoDB = require('./connection');
 const passport = require('./auth');
 require('dotenv').config();
+const {JWTMiddleware} = require("./jwt")
 
 const PORT = process.env.PORT;
 const MONGO_DB_URL = process.env.MONGO_DB_URL;
@@ -44,7 +45,7 @@ app.get('/', (req, res) => {
 
 // Route handlers for '/person' and '/menuitem' routes with authentication
 const personRouter = require("./routes/personRoute");
-app.use('/person',passwordMiddleware, personRouter);
+app.use('/person' , personRouter);
 
 const menuitemRoute = require("./routes/menuitemRoute");
 app.use('/menuitem', passwordMiddleware, menuitemRoute);
